@@ -7,7 +7,7 @@
 VIMRC_LOCATION='~/.vimrc'
 
 function start_message(){
-    echo -en "Installing basic config...\n"
+    echo -en "Installing basic config... \n"
 }
 
 function install_vim(){
