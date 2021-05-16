@@ -11,12 +11,23 @@ function start_message(){
 }
 
 function install_vim(){
-    if [ ! -f "$VIMRC_LOCATION" ]; then
-        # File is not found so we make the config
-        touch $VIMRC_LOCATION 
-        echo -en "set number\nsyntax on\n" >> $VIMRC_LOCATION
-    fi
+	# Getting vim-plug
+	# curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim	
+
+	# Getting Vundle
+	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+	
+	# We need to install NodeJS for coc.nvim to work
+	sudo apt -y install nodejs
+
+	
+
+
+	# Installing the Vim plugins
+	vim +PluginInstall +qall
 }
+
 
 function install_shortcuts(){
     # Making the startup shortcut
