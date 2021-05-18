@@ -22,7 +22,8 @@ function install_vim(){
 	sudo apt -y install nodejs
 
 	
-
+	# Copy the .vimrc from here to the home folder
+	cp vim/vimrc /home/$USER/.vimrc
 
 	# Installing the Vim plugins
 	vim +PluginInstall +qall
