@@ -149,6 +149,7 @@ colorscheme CodeFactoryv3
 
 " Setting the cursor
 set cursorline
+hi CursorLine   cterm=NONE ctermbg=234 ctermfg=NONE
 
 let g:deoplete#enable_at_startup = 1
 
