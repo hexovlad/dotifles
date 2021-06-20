@@ -46,12 +46,6 @@ function install_vim(){
 }
 
 
-function install_shortcuts(){
-    # Making the startup shortcut
-    cp run_browsers ~/.tools/.run_browsers
-    sudo ln -s ~/.tools/.run_browsers /usr/bin/st
-}
-
 # The main function
 function main(){
     start_message
@@ -60,8 +54,8 @@ function main(){
     echo -en "Installing Vim...\n"
     install_vim
 
-    # echo -en "Installing the shortcuts...\n"
-    # install_shortcuts
+	echo -en "Setting the PS1... \n"
+	PS1_setter 
 }
 
 
