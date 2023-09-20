@@ -36,6 +36,10 @@ function install_shortcuts(){
     sudo ln -s ~/.tools/.run_browsers /usr/bin/st
 }
 
+function add_bashrc() {  # Adding the bashrc contents
+	cat ~/.bashrc bashrc_contents/bashrc_contents > ~/.bashrc  # Putting the concatenated text in the .bashrc
+}
+
 # The main function
 function main(){
     start_message
@@ -43,6 +47,9 @@ function main(){
     # Tries to install Vim basic config
     echo -en "Installing Vim...\n"
     install_vim
+
+    echo -en "Installing the bashrc changes...\n"
+	add_bashrc  # Adding the bashrc info to the local file
 
     # echo -en "Installing the shortcuts...\n"
     # install_shortcuts

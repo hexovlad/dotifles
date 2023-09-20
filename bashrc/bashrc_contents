@@ -1,0 +1,96 @@
+# ===============================
+# =   Personal Modifications 	=
+# ===============================
+
+# #############
+# Nice printing
+# #############
+
+# Prints ok message
+function print_ok (){
+	echo -en "[\e[92m*\e[0m] $1"
+}
+
+# Prints warn message
+function print_warn (){
+	echo -en "[\e[93m*\e[0m] $1"
+}
+
+# Prints err message
+function print_err (){
+	echo -en "[\e[91m*\e[0m] $1"
+}
+
+# Setting the PS1 
+if [ $EUID != 0 ] ; then
+	export PS1="╭ \[$(tput bold)\]\[\033[38;5;9m\]\u\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;245m\]@\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;46m\]\H\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;15m\] \A ($?)\n╰[\[$(tput sgr0)\]\[\033[38;5;8m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]]\\$\[$(tput sgr0)\] "
+else
+    export PS1='\e[1;38;5;56;48;5;234m\u \e[38;5;240mon \e[1;38;5;28;48;5;234m\h \e[38;5;54m\d \@\e[0m\n\e[0;38;5;56;48;5;234m[\w] \e[1m\$\e[0m '
+
+fi
+
+# #####################
+# Functions and aliases
+# #####################
+
+
+# Alias for git
+alias gcommit="git commit -S -am"
+alias gpush='git push --force-with-lease origin "$(git rev-parse --abbrev-ref HEAD)"'
+
+# Alias for docker
+alias dcup="docker-compose up"
+alias dcdw="docker-compose down"
+
+
+# Starts logging the terminal session
+# in the .logs folder
+function logstart {
+	LOGPATH="/home/user/.logs"
+
+	# Creates the log directory if it didn't already exist
+	mkdir -p "$LOGPATH" || exit 1
+
+	# Creates the log file in the $LOGPATH
+	test "$(ps -ocommand= -p $PPID | awk '{print $1}')" == 'script' || (script -f $LOGPATH/$(date +"%d-%b-%y_%H-%M-%S")_shell.log)
+}
+
+# Making the nice human 
+# readable logs 
+function logmake {
+	LOGPATH="/home/user/.logs"
+	LOGS="/home/user/.logs_formatted"
+
+	# Creates the nice log directory if it didn't already exist
+	mkdir -p "$LOGS" || exit 1
+
+	# Creating a nice print of each log
+	for FILE in $LOGPATH/*; do
+		cat $FILE | aha  > $LOGS/$(echo FILE | sed 's/.*\. //').html
+	done
+
+	print_ok "Created logs in $LOGS\n"
+}
+
+# Clearning the raw and formatted
+# logs safely
+function logclear {
+	print_ok "Logs are cleared"
+}
+
+# Downloading a playlist
+function ytpldown () {
+	youtube-dl --get-id "$1"   | xargs -I '{}' -P 5 youtube-dl -f 22 'https://youtube.com/watch?v={}'
+}
+
+# TTS function
+function tts () {
+	echo "(SayText \"$1\")" | festival --pipe
+}
+
+function eachline () {
+	while IFS= read -r line; do "$2"; done < "$1"
+}
+
+# ENVIRONEMNETAL VARS
+
